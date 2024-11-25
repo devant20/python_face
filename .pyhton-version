@@ -1,6 +1,7 @@
-pip install django
-pip install djangorestframework
-pip install requests
-pip install numpy
-pip install Pillow
-pip install deepface
+pip install "django>=4.2,<5.1"
+pip install "djangorestframework>=3.13"
+pip install "requests"
+pip install "numpy>=1.22"
+pip install "Pillow>=9.3.0"
+pip install "deepface"
+
