@@ -28,7 +28,7 @@ APPEND_SLASH = False
 ALLOWED_HOSTS = []
 
 # Media settings
-MEDIA_URL = 'https://soumen1234.pythonanywhere.com/media/'
+MEDIA_URL = 'http://127.0.0.1/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition

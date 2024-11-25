@@ -19,73 +19,59 @@ def load_image(img_url):
     except Exception as e:
         print(f"Error loading image from {img_url}: {str(e)}")
         return None
-    
+
 def index(request):
     return HttpResponse("Welcome to Django Project")
 
 class FaceCheckAPI(APIView):
     def get(self, request):
-        url = "https://devanthosting.cloud/icare_v2/icare_api/public/api/getStudents/2"
-        headers = {
-            "Authorization": "Bearer 29|iUmTLVUyinZ3SUmCbcTkxTu6mKcwvaleD97es9Jwd20395cf"
-        }
-        
-        try:
-            response = requests.get(url, headers=headers)
-            
-            if response.status_code == 200:
-                data = response.json()
-                return Response({"status": "success", "data": data})
-            else:
-                return Response({"status": "error", "message": response.text},status=response.status_code)
-            
-        except requests.exceptions.RequestException as e:
-            return Response({"status": "error", "message": str(e)},status=500)
-    
+        reference_img_list = [
+            {
+                "id": 54564,
+                "name": "Ayan",
+                "image": os.path.join(settings.MEDIA_URL, 'user1.jpg')
+            },
+            {
+                "id": 54565,
+                "name": "Krishna",
+                "image": os.path.join(settings.MEDIA_URL, 'user2.jpg')
+            },
+            {
+                "id": 54566,
+                "name": "Soumen",
+                "image": os.path.join(settings.MEDIA_URL, 'user3.jpg')
+            }
+        ]
+        return Response({"status": "success", "data": reference_img_list})
+
     def post(self, request):
         data = request.data
-        user_img_url = data.get('img_url')
-        # return Response({"message": user_img_url},status=200)
+        user_img_url = data['img_url']
+        # Response({"sata": data}, status=200)
 
         # Load the user face image
-        user_face = load_image(user_img_url)
+        user_face = load_image(os.path.join(settings.MEDIA_URL, user_img_url))
+
         if user_face is None:
             return Response({"error": "Failed to load user image."}, status=400)
 
-        url = "https://devanthosting.cloud/icare_v2/icare_api/public/api/getStudents/2"
-        headers = {
-            "Authorization": "Bearer 29|iUmTLVUyinZ3SUmCbcTkxTu6mKcwvaleD97es9Jwd20395cf"
-        }
-        
-        try:
-            response = requests.get(url, headers=headers)
-            
-            if response.status_code == 200:
-                res_data = response.json()
-                reference_img_list = res_data.get("data", [])
-            else:
-                return Response({"status": "error", "message": response.text},status=response.status_code)
-            
-        except requests.exceptions.RequestException as e:
-            return Response({"status": "error", "message": str(e)},status=500)
-        
-        # reference_img_list = [
-        #     {
-        #         "id": 54564,
-        #         "name": "Ayan",
-        #         "image": os.path.join(settings.MEDIA_URL, 'user1.jpg')
-        #     },
-        #     {
-        #         "id": 54565,
-        #         "name": "Krishna",
-        #         "image": os.path.join(settings.MEDIA_URL, 'user2.jpg')
-        #     },
-        #     {
-        #         "id": 54566,
-        #         "name": "Soumen",
-        #         "image": os.path.join(settings.MEDIA_URL, 'user3.jpg')
-        #     }
-        # ]
+        reference_img_list = [
+            {
+                "id": 54564,
+                "name": "Ayan",
+                "image": os.path.join(settings.MEDIA_URL, 'user1.jpg')
+            },
+            {
+                "id": 54565,
+                "name": "Krishna",
+                "image": os.path.join(settings.MEDIA_URL, 'user2.jpg')
+            },
+            {
+                "id": 54566,
+                "name": "Soumen",
+                "image": os.path.join(settings.MEDIA_URL, 'user3.jpg')
+            }
+        ]
 
         # Track match result and matching reference details
         match_found = False
